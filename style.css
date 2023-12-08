@@ -1,0 +1,60 @@
+:root {
+    --picotron-black: #000000;
+    --picotron-dark-blue: #1d2b53;
+    --picotron-dark-purple: #7e2553;
+    --picotron-dark-green: #008751;
+    --picotron-brown: #ab5236;
+    --picotron-dark-grey: #5f574f;
+    --picotron-light-grey: #c2c3c7;
+    --picotron-white: #fff1e8;
+
+    --picotron-red: #ff004d;
+    --picotron-orange: #ffa300;
+    --picotron-yellow: #ffec27;
+    --picotron-green: #00e436;
+    --picotron-blue: #29adff;
+    --picotron-lavender: #83769c;
+    --picotron-pink: #ff77a8;
+    --picotron-light-peach: #ffccaa;
+
+    --picotron-purple: #672d8a;
+    --picotron-medium-blue: #0a62be;
+    --picotron-maroon: #422136;
+    --picotron-blue-green: #125359;
+    --picotron-dark-brown: #742f29;
+    --picotron-light-brown: #d48e6f;
+    --picotron-medium-grey: #a28879;
+    --picotron-light-yellow: #fff57d;
+
+    --picotron-dark-red: #be1226;
+    --picotron-dark-orange: #ff6c24;
+    --picotron-light-green: #a8f12e;
+    --picotron-medium-green: #00b251;
+    --picotron-light-blue: #83ebf5;
+    --picotron-mauve: #bd9adf;
+    --picotron-purple: #b937b8;
+    --picotron-light-pink: #ffacc5;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    whidth: 100%;
+    margin: 0;
+    font-family: ui-sans-serif;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    background-color: #f8f9f0;
+    display: block;
+}
+
+div.controls {
+    position: absolute;
+    top: 1em;
+    left: 2em;
+}
