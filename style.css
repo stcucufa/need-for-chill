@@ -34,6 +34,8 @@
     --picotron-mauve: #bd9adf;
     --picotron-purple: #b937b8;
     --picotron-light-pink: #ffacc5;
+
+    --offwhite: #f8f9f0;
 }
 
 html, body {
@@ -46,10 +48,10 @@ body {
     font-family: ui-sans-serif;
 }
 
-canvas {
+svg, canvas {
     width: 100%;
     height: 100%;
-    background-color: #f8f9f0;
+    background-color: var(--offwhite);
     display: block;
 }
 
@@ -58,3 +60,21 @@ div.controls {
     top: 1em;
     left: 2em;
 }
+
+svg circle {
+    fill: var(--picotron-dark-blue);
+}
+
+svg line {
+    stroke: var(--picotron-light-grey);
+}
+
+svg path {
+    stroke: var(--picotron-dark-blue);
+    stroke-width: 4;
+    fill: none;
+}
+
+svg circle:first-child {
+    fill: var(--picotron-red);
+};
