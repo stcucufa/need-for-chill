@@ -16,8 +16,7 @@ const deg = th => th * 180 / Math.PI;
 
 const Road = {
     create(element) {
-        const road = Object.assign(Object.create(this), { points: [[0, 0]], element });
-        road.lineElements = road.element.appendChild(svg("g"));
+        const road = Object.assign(Object.create(this), { points: [[0, 0]], element, curves: [] });
         road.curveElements = road.element.appendChild(svg("g"));
         road.pointElements = road.element.appendChild(svg("g"));
         road.addElementForPoint(road.points[0]);
@@ -40,8 +39,7 @@ const Road = {
         this.points.push(p);
         const element = this.addElementForPoint(p);
         element.addEventListener("pointerdown", this);
-        this.lineElements.appendChild(svg("line", { x1, y1, x2, y2 }));
-        this.curveElements.appendChild(svg("path", { d: curve(x1, y1, x2, y2) }));
+        this.curves.push(this.curveElements.appendChild(svg("path", { d: curve(x1, y1, x2, y2) })));
     },
 
     handleEvent(event) {
@@ -54,10 +52,8 @@ const Road = {
                 this.drag = {
                     element: event.target,
                     point: this.points[index],
-                    line: this.lineElements.children[index - 1],
-                    nextLine: this.lineElements.children[index],
-                    curve: this.curveElements.children[index - 1],
-                    nextCurve: this.curveElements.children[index],
+                    curve: this.curves[index - 1],
+                    nextCurve: this.curves[index],
                     x: event.clientX,
                     y: event.clientY,
                     gx: Math.cos(rad(this.MAX_ANGLE)),
@@ -65,7 +61,7 @@ const Road = {
                 };
                 [this.drag.x1, this.drag.y1] = this.points[index - 1];
                 [this.drag.x2, this.drag.y2] = this.drag.point;
-                if (this.drag.nextLine) {
+                if (this.drag.nextCurve) {
                     [this.drag.x3, this.drag.y3] = this.points[index + 1];
                 }
                 break;
@@ -84,7 +80,7 @@ const Road = {
                     x2 = this.drag.x1 + d * this.drag.gx;
                     y2 = this.drag.y1 - d * this.drag.gy;
                 }
-                if (this.drag.nextLine) {
+                if (this.drag.nextCurve) {
                     const qx = this.drag.x3 - x2;
                     const qy = y2 - this.drag.y3;
                     const angle = deg(Math.atan2(qy, qx));
@@ -102,10 +98,6 @@ const Road = {
                 this.drag.point[1] = y2;
                 this.drag.element.setAttribute("cx", x2);
                 this.drag.element.setAttribute("cy", y2);
-                this.drag.line.setAttribute("x2", x2);
-                this.drag.line.setAttribute("y2", y2);
-                this.drag.nextLine?.setAttribute("x1", x2);
-                this.drag.nextLine?.setAttribute("y1", y2);
                 this.drag.curve.setAttribute("d", curve(this.drag.x1, this.drag.y1, x2, y2));
                 this.drag.nextCurve?.setAttribute("d", curve(x2, y2, this.drag.x3, this.drag.y3));
                 break;

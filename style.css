@@ -65,10 +65,6 @@ svg circle {
     fill: var(--picotron-dark-blue);
 }
 
-svg line {
-    stroke: var(--picotron-light-grey);
-}
-
 svg path {
     stroke: var(--picotron-dark-blue);
     stroke-width: 4;
