@@ -16,11 +16,17 @@ const deg = th => th * 180 / Math.PI;
 
 const Road = {
     create(element) {
-        const road = Object.assign(Object.create(this), { points: [[0, 0]], element, curves: [] });
+        const road = Object.assign(Object.create(this), {
+            id: Math.random().toString(36).substr(2, 7), points: [[0, 0]], element, curves: []
+        });
         road.curveElements = road.element.appendChild(svg("g"));
         road.pointElements = road.element.appendChild(svg("g"));
         road.addElementForPoint(road.points[0]);
         return road;
+    },
+
+    get key() {
+        return `chill:points:${this.id}`;
     },
 
     R: 5,
@@ -40,6 +46,7 @@ const Road = {
         const element = this.addElementForPoint(p);
         element.addEventListener("pointerdown", this);
         this.curves.push(this.curveElements.appendChild(svg("path", { d: curve(x1, y1, x2, y2) })));
+        this.savePoints();
     },
 
     handleEvent(event) {
@@ -105,10 +112,20 @@ const Road = {
                 document.removeEventListener("pointermove", this);
                 document.removeEventListener("pointerup", this);
                 delete this.drag;
+                this.savePoints();
                 break;
         }
+    },
+
+    // Save points to local storage.
+    savePoints() {
+        window.localStorage.setItem(
+            this.key,
+            JSON.stringify(this.points.map(([x, y]) => { return [y, 0, x]; }))
+        );
     }
 };
 
 const road = Road.create(document.querySelector("svg g"));
+document.querySelector("a").href += `?road=${road.key}`;
 document.querySelector("button").addEventListener("click", () => { road.addPoint(); });

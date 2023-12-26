@@ -170,6 +170,21 @@ function draw() {
     context.restore();
 }
 
+const params = new URLSearchParams(window.location.search);
+if (params.has("road")) {
+    const key = params.get("road");
+    try {
+        const roadJSON = window.localStorage.getItem(key);
+        const road = JSON.parse(roadJSON);
+        if (!road) {
+            console.warn(`No road for ${key}`);
+        }
+        console.log(key, road);
+    } catch (e) {
+        console.error(`Could not get road ${key}: ${e.message}`);
+    }
+}
+
 let lastUpdate = performance.now();
 window.requestAnimationFrame(function loop() {
     const now = performance.now();
